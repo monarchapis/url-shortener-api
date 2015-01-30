@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<bean id="hawkV1AuthenticationSigner"
+		class="com.monarchapis.driver.authentication.HawkV1AuthenticationSigner" />
+
+	<bean id="hawkV1RequestHasher"
+		class="com.monarchapis.driver.hash.HawkV1RequestHasher" />
+
+	<bean id="hawkV1HasherAlgorithm"
+		class="com.monarchapis.driver.model.HasherAlgorithm">
+		<constructor-arg value="Hawk V1" />
+		<constructor-arg>
+			<array>
+				<value>sha256</value>
+			</array>
+		</constructor-arg>
+	</bean>
+
+	<bean id="serviceContainer"
+		class="com.monarchapis.driver.service.v1.ServiceContainer">
+		<property name="delegateAuthorization" value="${service.delegateAuthorization}" />
+		<property name="captureAnalytics" value="${service.captureAnalytics}" />
+		<property name="bypassRateLimiting" value="${service.bypassRateLimiting}" />
+	</bean>
+
+	<bean id="oauthEndpoints"
+		class="com.monarchapis.driver.service.v1.OAuthEndpoints">
+		<property name="authorizationCodeRequestUrl" value="${oauth.authorizationCode.request.url}" />
+		<property name="authorizationCodeTokenUrl" value="${oauth.authorizationCode.token.url}" />
+		<property name="implicitUrl" value="${oauth.implicit.url}" />
+		<property name="passwordUrl" value="${oauth.password.url}" />
+	</bean>
+	
+	<bean id="providerCredentials"
+		class="com.monarchapis.driver.authentication.ProviderCredentials">
+		<constructor-arg value="${monarch.providerKey}" />
+		<constructor-arg value="${monarch.sharedSecret}" />
+	</bean>
+	
+	<bean id="openApi"
+		class="com.monarchapis.driver.service.v1.impl.OpenApiDriver">
+		<constructor-arg value="${serviceApi.url}" />
+	</bean>
+
+	<bean id="serviceInfoResolver"
+		class="com.monarchapis.driver.service.v1.SingleServiceInfoResolver">
+		<constructor-arg ref="openApi" />
+		<constructor-arg value="${monarch.environmentName}" />
+		<constructor-arg value="${serviceName}" />
+		<constructor-arg value="${monarch.providerKey}" />
+	</bean>
+
+	<bean id="serviceApi" class="com.monarchapis.driver.service.v1.impl.ServiceApiDriver">
+		<constructor-arg value="${serviceApi.url}" />
+		<constructor-arg ref="providerCredentials" />
+		<constructor-arg ref="serviceInfoResolver" />
+		<constructor-arg ref="hawkV1AuthenticationSigner" />
+	</bean>
+
+	<bean id="analyticsApi"
+		class="com.monarchapis.driver.service.v1.impl.AnalyticsApiDriver">
+		<constructor-arg value="${analyticsApi.url}" />
+		<constructor-arg ref="providerCredentials" />
+		<constructor-arg ref="serviceInfoResolver" />
+		<constructor-arg ref="hawkV1AuthenticationSigner" />
+	</bean>
+
+	<bean id="eventsApi" class="com.monarchapis.driver.service.v1.impl.EventsApiDriver">
+		<constructor-arg value="${eventsApi.url}" />
+		<constructor-arg ref="providerCredentials" />
+		<constructor-arg ref="serviceInfoResolver" />
+		<constructor-arg ref="hawkV1AuthenticationSigner" />
+	</bean>
+
+	<bean id="requestHasherRegistry"
+		class="com.monarchapis.driver.hash.RequestHasherRegistry" />
+</beans>

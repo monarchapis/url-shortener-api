@@ -1,0 +1,168 @@
+{
+	"id": "a8957368-3511-930e-129d-15ebb21962c5",
+	"name": "URL Shortener",
+	"description": "",
+	"order": [
+		"d7b7f930-6df8-551e-e525-ab50bb6ab2ad",
+		"0f037998-d371-e201-9c99-5debc80f2a48",
+		"11fa210e-0cf6-decc-8738-a75bf04d7d20",
+		"b3cbecf9-1a74-570a-2993-271c81787c52",
+		"b79614a7-bc44-82e6-569f-d6556e5a41a3"
+	],
+	"folders": [],
+	"timestamp": 1422290393887,
+	"synced": false,
+	"remoteLink": "",
+	"requests": [
+		{
+			"id": "0f037998-d371-e201-9c99-5debc80f2a48",
+			"headers": "Accept: application/json\nX-Api-Key: Sl2SkvFjP5h5Yc7XrIt7fTVV\nAuthorization: Bearer 6DecCIjd1tYf9DH4PYir09hp\n",
+			"url": "http://localhost:8080/shortener/v1/urls/shorten",
+			"preRequestScript": "",
+			"pathVariables": {},
+			"method": "POST",
+			"data": [
+				{
+					"key": "longUrl",
+					"value": "http://www.google.com",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "urlencoded",
+			"version": 2,
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1422309307138,
+			"name": "Shorten URL",
+			"description": "",
+			"collectionId": "a8957368-3511-930e-129d-15ebb21962c5",
+			"responses": [],
+			"synced": false
+		},
+		{
+			"id": "11fa210e-0cf6-decc-8738-a75bf04d7d20",
+			"headers": "Accept: application/json\nX-Api-Key: Sl2SkvFjP5h5Yc7XrIt7fTVV\n",
+			"url": "http://localhost:8080/shortener/v1/urls/expand?slug=wKYpxx&visit=true",
+			"preRequestScript": "",
+			"pathVariables": {},
+			"method": "GET",
+			"data": [],
+			"dataMode": "params",
+			"version": 2,
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1422322913478,
+			"name": "Expand URL",
+			"description": "",
+			"collectionId": "a8957368-3511-930e-129d-15ebb21962c5",
+			"responses": [],
+			"synced": false
+		},
+		{
+			"id": "b3cbecf9-1a74-570a-2993-271c81787c52",
+			"headers": "Accept: application/json\nX-Api-Key: Sl2SkvFjP5h5Yc7XrIt7fTVV\nAuthorization: Bearer 6DecCIjd1tYf9DH4PYir09hp\n",
+			"url": "http://localhost:8080/shortener/v1/me/urls",
+			"preRequestScript": "",
+			"pathVariables": {},
+			"method": "GET",
+			"data": [],
+			"dataMode": "params",
+			"version": 2,
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1422309411861,
+			"name": "My URLs",
+			"description": "",
+			"collectionId": "a8957368-3511-930e-129d-15ebb21962c5",
+			"responses": [],
+			"synced": false
+		},
+		{
+			"id": "b79614a7-bc44-82e6-569f-d6556e5a41a3",
+			"headers": "Accept: application/json\nX-Api-Key: Sl2SkvFjP5h5Yc7XrIt7fTVV\nAuthorization: Bearer 6DecCIjd1tYf9DH4PYir09hp\n",
+			"url": "http://localhost:8080/shortener/v1/urls/shorten",
+			"preRequestScript": "",
+			"pathVariables": {},
+			"method": "POST",
+			"data": [
+				{
+					"key": "longUrl",
+					"value": "http://www.google.com",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "slug",
+					"value": "2015-marketing-plan",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "urlencoded",
+			"version": 2,
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1422309421949,
+			"name": "Shorten URL w/ Slug",
+			"description": "",
+			"collectionId": "a8957368-3511-930e-129d-15ebb21962c5",
+			"responses": [],
+			"synced": false
+		},
+		{
+			"id": "d7b7f930-6df8-551e-e525-ab50bb6ab2ad",
+			"headers": "Authorization: Basic U2wyU2t2RmpQNWg1WWM3WHJJdDdmVFZWOnZnNm1VUkVmNU1mQkZPU25IN1hzQnhzSQ==\n",
+			"url": "http://localhost:8080/oauth2/token",
+			"preRequestScript": "",
+			"pathVariables": {},
+			"method": "POST",
+			"data": [
+				{
+					"key": "grant_type",
+					"value": "password",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "username",
+					"value": "demo",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "password",
+					"value": "demo",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "scope",
+					"value": "urls",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "urlencoded",
+			"version": 2,
+			"tests": "",
+			"currentHelper": "basicAuth",
+			"helperAttributes": {
+				"username": "Sl2SkvFjP5h5Yc7XrIt7fTVV",
+				"password": "vg6mUREf5MfBFOSnH7XsBxsI",
+				"id": "basic",
+				"timestamp": 1421265715602
+			},
+			"time": 1422301763837,
+			"name": "Authenticate",
+			"description": "",
+			"collectionId": "a8957368-3511-930e-129d-15ebb21962c5",
+			"responses": [],
+			"synced": false
+		}
+	]
+}

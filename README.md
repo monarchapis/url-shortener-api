@@ -107,6 +107,9 @@ Now, you will need to create the following in the Monarch admin console:
 				- Expiration = 1:00:00
 				- Life Span = Session
 				- User Permissions: Manage globally, "urls" permission checked
+		- Authenticators:
+			- API Key / Bearer Token (Simple)
+				- Checked: Require API Key with Token for verification
 		- Claims Sources:
 			- (New) Internal
 				- Profile = demo

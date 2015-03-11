@@ -120,9 +120,9 @@ public class UrlResource {
 		return new ItemsResponse<ShortenedUrl>(urlShortenerService.urlsByUserId(userId));
 	}
 
-	private static ShortenedUrl require(Optional<ShortenedUrl> timesheet) {
-		if (timesheet.isPresent()) {
-			return timesheet.get();
+	private static ShortenedUrl require(Optional<ShortenedUrl> shortenedUrl) {
+		if (shortenedUrl.isPresent()) {
+			return shortenedUrl.get();
 		}
 
 		throw new NotFoundException("Shortened URL was not found.");

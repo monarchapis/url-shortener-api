@@ -17,6 +17,7 @@ import com.monarchapis.api.urlshortener.v1.model.ItemsResponse;
 import com.monarchapis.api.urlshortener.v1.model.ShortenedUrl;
 import com.monarchapis.api.urlshortener.v1.service.UrlShortenerService;
 import com.monarchapis.driver.annotation.ApiInject;
+import com.monarchapis.driver.annotation.ApiVersion;
 import com.monarchapis.driver.annotation.Authorize;
 import com.monarchapis.driver.annotation.Claim;
 import com.monarchapis.driver.exception.ForbiddenException;
@@ -30,6 +31,7 @@ import com.monarchapis.driver.util.ContextUtils;
  * @version v1
  */
 @Path("/v1")
+@ApiVersion("1")
 public class UrlResource {
 	@Inject
 	private UrlShortenerService urlShortenerService;

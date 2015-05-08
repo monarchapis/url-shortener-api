@@ -14,7 +14,17 @@
 	<context:annotation-config />
 
 	<import resource="properties-context.xml" />
-	<import resource="api-context.xml" />
+	<import resource="classpath:/com/monarchapis/driver/api-context.xml" />
+
+	<!-- Override configuration bundle to add API specific errors -->
+	<bean id="configurationBundle" class="com.monarchapis.driver.configuration.ResourceConfigurationBundle">
+		<property name="basenames">
+			<array>
+				<value>com/monarchapis/driver/Errors</value>
+				<value>com/monarchapis/api/urlshortener/Errors</value>
+			</array>
+		</property>
+	</bean>
 
 	<bean id="urlShortener"
 		class="com.monarchapis.api.urlshortener.v1.service.mongodb.MongoDBUrlShortenerService">

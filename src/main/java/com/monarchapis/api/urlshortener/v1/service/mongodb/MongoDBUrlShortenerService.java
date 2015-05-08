@@ -14,7 +14,8 @@ import com.google.common.base.Optional;
 import com.monarchapis.api.urlshortener.v1.model.ShortenedUrl;
 import com.monarchapis.api.urlshortener.v1.service.UrlShortenerService;
 import com.monarchapis.driver.exception.ConflictException;
-import com.monarchapis.driver.util.ContextUtils;
+import com.monarchapis.driver.model.Claims;
+import com.monarchapis.driver.model.ClaimNames;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
@@ -28,8 +29,7 @@ public class MongoDBUrlShortenerService implements UrlShortenerService {
 	private DB db;
 	private DBCollection collection;
 
-	public MongoDBUrlShortenerService(String host, int port, String database)
-			throws UnknownHostException {
+	public MongoDBUrlShortenerService(String host, int port, String database) throws UnknownHostException {
 		mongo = new MongoClient(host, port);
 		mongo.setWriteConcern(WriteConcern.JOURNALED);
 		db = mongo.getDB(database);
@@ -71,20 +71,19 @@ public class MongoDBUrlShortenerService implements UrlShortenerService {
 				new BasicDBObject("_id", slug));
 
 		if (o != null) {
-			throw new ConflictException(
-					"Shortened URL with slug \"" + slug + "\" already exists.",
-					"The slug you provided has been taken by another shortened URL.",
-					"CON-0002", "http://developer.acme.com/errors/CON-0002");
+			throw new ConflictException("shortenedUrls", slug);
 		}
 
 		return create(longUrl, slug);
 	}
 
 	private ShortenedUrl create(String longUrl, String slug) {
+		String userId = Claims.current().getSubject().or("unknown");
+
 		DBObject doc = new BasicDBObject("_id", slug) //
 				.append("longUrl", longUrl) //
 				.append("visits", 0L) //
-				.append("createdBy", ContextUtils.getUserId()) //
+				.append("createdBy", userId) //
 				.append("createdDate", new Date());
 
 		collection.insert(doc);
@@ -127,8 +126,7 @@ public class MongoDBUrlShortenerService implements UrlShortenerService {
 	@Override
 	public List<ShortenedUrl> urlsByUserId(String userId) {
 		List<ShortenedUrl> urls = new LinkedList<ShortenedUrl>();
-		DBCursor cursor = collection
-				.find(new BasicDBObject("createdBy", userId));
+		DBCursor cursor = collection.find(new BasicDBObject("createdBy", userId));
 
 		while (cursor.hasNext()) {
 			DBObject o = cursor.next();

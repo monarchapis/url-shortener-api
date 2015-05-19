@@ -22,7 +22,6 @@ import com.monarchapis.driver.annotation.Claim;
 import com.monarchapis.driver.exception.ForbiddenException;
 import com.monarchapis.driver.exception.NotFoundException;
 import com.monarchapis.driver.model.Claims;
-import com.monarchapis.driver.model.ClaimNames;
 
 /**
  * TODO

@@ -5,11 +5,13 @@
 	<artifactId>url-shortener-api</artifactId>
 	<version>1.0.0</version>
 	<packaging>war</packaging>
+	<name>Sample API: URL Shortener</name>
 
 	<properties>
-		<org.springframework.version>4.1.4.RELEASE</org.springframework.version>
-		<jersey.version>2.15</jersey.version>
-		<jackson.version>2.5.0</jackson.version>
+		<org.springframework.version>4.1.6.RELEASE</org.springframework.version>
+		<jersey.version>2.17</jersey.version>
+		<jackson.version>2.4.5</jackson.version>
+		<slf4j.version>1.7.12</slf4j.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<wtpversion>2.0</wtpversion>
@@ -52,6 +54,19 @@
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-all</artifactId>
 			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
 		</dependency>
 
 		<dependency>
@@ -129,7 +144,7 @@
 		<dependency>
 			<groupId>com.monarchapis</groupId>
 			<artifactId>service-api-java-driver</artifactId>
-			<version>0.8.0</version>
+			<version>0.8.1</version>
 		</dependency>
 	</dependencies>
 
@@ -146,6 +161,22 @@
 				<artifactId>mockito-all</artifactId>
 				<scope>test</scope>
 				<version>1.10.19</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-api</artifactId>
+				<version>${slf4j.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-log4j12</artifactId>
+				<version>${slf4j.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>log4j</groupId>
+				<artifactId>log4j</artifactId>
+				<version>1.2.17</version>
 			</dependency>
 
 			<dependency>
@@ -221,7 +252,7 @@
 			<dependency>
 				<groupId>org.mongodb</groupId>
 				<artifactId>mongo-java-driver</artifactId>
-				<version>2.12.5</version>
+				<version>3.0.1</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>

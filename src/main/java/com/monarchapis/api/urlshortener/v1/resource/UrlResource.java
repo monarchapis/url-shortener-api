@@ -4,7 +4,6 @@ import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
-import javax.ws.rs.NotFoundException;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -21,8 +20,8 @@ import com.monarchapis.driver.annotation.ApiVersion;
 import com.monarchapis.driver.annotation.Authorize;
 import com.monarchapis.driver.annotation.Claim;
 import com.monarchapis.driver.exception.ForbiddenException;
-import com.monarchapis.driver.model.ApiContext;
-import com.monarchapis.driver.util.ContextUtils;
+import com.monarchapis.driver.exception.NotFoundException;
+import com.monarchapis.driver.model.Claims;
 
 /**
  * TODO
@@ -37,7 +36,7 @@ public class UrlResource {
 	private UrlShortenerService urlShortenerService;
 
 	@ApiInject
-	private ApiContext context;
+	private Claims claims;
 
 	/**
 	 * Creates a shortened URL if one does not already exist, Otherwise, the
@@ -54,11 +53,8 @@ public class UrlResource {
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	public ShortenedUrl shorten(@FormParam("longUrl") String longUrl, @FormParam("slug") String slug) {
 		if (slug != null) {
-			if (!ContextUtils.hasClaim("group", "marketing")) {
-				throw new ForbiddenException( //
-						"You are not permitted to create shortened URLs with manual slugs.", //
-						"The user does not have permission to use manual slugs.", "URL-0002", //
-						"http://developer.acme.com/errors/URL-0002");
+			if (!claims.hasValueInClaim("marketing", "group")) {
+				throw new ForbiddenException("shortenedUrls");
 			}
 
 			return urlShortenerService.shorten(longUrl, slug);
@@ -117,7 +113,7 @@ public class UrlResource {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public ItemsResponse<ShortenedUrl> myUrls() {
-		String userId = ContextUtils.getUserId("unknown");
+		String userId = claims.getSubject().or("unknown");
 
 		return new ItemsResponse<ShortenedUrl>(urlShortenerService.urlsByUserId(userId));
 	}
@@ -127,6 +123,6 @@ public class UrlResource {
 			return shortenedUrl.get();
 		}
 
-		throw new NotFoundException("Shortened URL was not found.");
+		throw new NotFoundException("shortenedUrls", "Shortened URL");
 	}
 }

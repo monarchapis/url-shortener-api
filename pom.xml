@@ -143,8 +143,7 @@
 
 		<dependency>
 			<groupId>com.monarchapis</groupId>
-			<artifactId>service-api-java-driver</artifactId>
-			<version>0.8.1</version>
+			<artifactId>service-java-driver</artifactId>
 		</dependency>
 	</dependencies>
 
@@ -253,6 +252,12 @@
 				<groupId>org.mongodb</groupId>
 				<artifactId>mongo-java-driver</artifactId>
 				<version>3.0.1</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.monarchapis</groupId>
+				<artifactId>service-java-driver</artifactId>
+				<version>0.8.2</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
